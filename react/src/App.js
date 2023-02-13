@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header>
         <a
           className="App-link btn"
           href="https://reactjs.org"
