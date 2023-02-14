@@ -1,33 +1,42 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
+import Spinner from 'react-bootstrap/Spinner';
 
 const LoginPage = lazy(() => import('./components/LoginPage'));
 const SignupPage = lazy(() => import('./components/SignupPage'));
 
 const Header = () => {
   return (
-    <header className="header navbar-top">
-      <div className="container">
-        <nav className="navbar navbar-expand-md">
-          <a className="navbar-brand mb-0 h1" href="/">Chess NJC</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarController" aria-controls="navbarController" aria-expanded="false" aria-label="Toggle navigation">
+    <header className="header">
+      <Navbar sticky="top" bg="dark" expand="md" variant="dark" collapseOnSelect>
+        <Container>
+          <Navbar.Brand href="home" className="mb-0 h1">Chess NJC</Navbar.Brand>
+          <Navbar.Toggle aria-controls="headerLinks" />
+          {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarController" aria-controls="navbarController" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarController">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
+          </button> */}
+          <Navbar.Collapse id="headerLinks">
+          {/* <div className="collapse navbar-collapse" id="navbarController"> */}
+            <Nav className="me-auto">
+            {/* <ul className="navbar-nav me-auto"> */}
+              <Nav.Link href="login" active={window.location.pathname === "/login"} >Login</Nav.Link>
+              {/* <li className="nav-item">
                 <a className={"nav-link" + (window.location.pathname === "/login"? " active": "")} href="login">Login</a>
-              </li>
-              <li className="nav-item" >
+              </li> */}
+              <Nav.Link href="signup" active={window.location.pathname === "/signup"} >Sign Up</Nav.Link>
+              {/* <li className="nav-item" >
                 <a className={"nav-link" + (window.location.pathname === "/signup"? " active": "")} href="signup">Sign Up</a>
-              </li>
-            </ul>
-            <div className="nav navbar-nav ms-auto">
-            </div>
-          </div>
-        </nav>
-      </div>
+              </li> */}
+            {/* </ul> */}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </header>
   );
 }
@@ -52,8 +61,12 @@ const HomePage = () => {
 
 const LoadingScreen = () => {
   return (
-    <div className="App-header">
-      <h1 className="h1">Loading...</h1>
+    <div className="App-header d-flex">
+      <div className="flex-column align-items-center justify-content-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
     </div>
   );
 }
