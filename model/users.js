@@ -30,10 +30,13 @@ const UserSchema = new Schema({
       return new Promise(async (resolve, reject) => {
         try {
           const result = await this.model('User').findOne(doc).select({_id: 1, password_encrypted: 2});
-          if (result.comparePassword(pwd, result.password_encrypted)) {
-            resolve({id: result._id});
+          if (result) {
+            if (result.comparePassword(pwd, result.password_encrypted)) {
+              resolve({id: result._id});
+            } else
+              reject({message: 'Invalid Password'});
           } else
-            reject({message: 'Invalid Password'});
+            reject({message: 'No Record Found'});
         } catch(err) {
           reject({message: 'Error Occured'});
         }
