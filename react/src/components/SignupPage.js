@@ -212,46 +212,46 @@ function App() {
     <>
       <div className="App-header">
         <Container>
-          <div className="mt-4 mb-4 h1 fw-bold">
-            Sign Up
+          <div className="d-flex flex-column flex-justify-center ms-auto me-auto" style={{width: '20em'}}>
+            <div className="mt-4 mb-4 h1 fw-bold">
+              Sign Up
+            </div>
+            <Form noValidate validated={validated} onSubmit={onRegister} autoComplete="off">
+              <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="ignFloat" label="IGN Name">
+                <Form.Control type="text" autoComplete="off" name="ignname" placeholder="IGN Name" value={formValue.ignname} onChange={onIGN} ref={setIgnRef} required isValid={isIGNValid()} isInvalid={isIGNInvalid()} pattern={pattern_an2.toString().substring(2, pattern_an2.toString().length-2)} />
+                <Form.Control.Feedback type="invalid">
+                  {ignError}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="userFloat" label="Username">
+                <Form.Control type="text" autoComplete="off" name="username" placeholder="Username" value={formValue.username} onChange={onUserName} isValid={isUserValid()} isInvalid={isUserInvalid()} ref={setUserRef} required pattern={pattern_an.toString().substring(2, pattern_an.toString().length-2)} />
+                <Form.Control.Feedback type="invalid">
+                  {userError}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="passFloat" label="New Password">
+                <Form.Control type="password" name="password" placeholder="New Password" value={formValue.password} onChange={onPassword} ref={setPassRef} isValid={passValid()} isInvalid={passInvalid()} required />
+                <Form.Control.Feedback type="invalid">
+                  {passError}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="rpassFloat" label="Repeat Password">
+                <Form.Control type="password" name="rpassword" placeholder="Repeat Password" value={formValue.rpassword} onChange={onRPassword} isValid={rpassValid()} isInvalid={rpassInvalid()} ref={setRPassRef} required />
+                <Form.Control.Feedback type="invalid">
+                  {rPassError}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3 ms-auto me-auto d-flex" controlId="acceptForm">
+                <Form.Check name="accept" className="ms-3 ms-auto me-auto flex-column align-items-center" label="Agree to terms and conditions" feedback="You must agree to the terms and conditions." feedbackType="invalid" onChange={onAcceptTerms} ref={setAcceptRef} required />{' '}
+              </Form.Group>
+              <Form.Group className="mb-3 ms-3 me-3">
+                <Button type="submit" variant="primary" className="mb-3 ps-4 pe-4" >Register</Button>
+              </Form.Group>
+            </Form>
+            {/* <div>{testDiv}</div> */}
+            <hr />
+            <a href="signup" className="m-3 btn btn-success">Already have an account? Login Here!</a>
           </div>
-          <div className="d-flex flex-column flex-justify-center w-75 ms-auto me-auto">
-          <Form noValidate validated={validated} onSubmit={onRegister} autoComplete="off">
-            <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="ignFloat" label="IGN Name">
-              <Form.Control type="text" autoComplete="off" name="ignname" placeholder="IGN Name" value={formValue.ignname} onChange={onIGN} ref={setIgnRef} required isValid={isIGNValid()} isInvalid={isIGNInvalid()} pattern={pattern_an2.toString().substring(2, pattern_an2.toString().length-2)} />
-              <Form.Control.Feedback type="invalid">
-                {ignError}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="userFloat" label="Username">
-              <Form.Control type="text" autoComplete="off" name="username" placeholder="Username" value={formValue.username} onChange={onUserName} isValid={isUserValid()} isInvalid={isUserInvalid()} ref={setUserRef} required pattern={pattern_an.toString().substring(2, pattern_an.toString().length-2)} />
-              <Form.Control.Feedback type="invalid">
-                {userError}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="passFloat" label="New Password">
-              <Form.Control type="password" name="password" placeholder="New Password" value={formValue.password} onChange={onPassword} ref={setPassRef} isValid={passValid()} isInvalid={passInvalid()} required />
-              <Form.Control.Feedback type="invalid">
-                {passError}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={FloatingLabel} className="ms-3 me-3 mb-3 pt-2 text-dark fs-4" controlId="rpassFloat" label="Repeat Password">
-              <Form.Control type="password" name="rpassword" placeholder="Repeat Password" value={formValue.rpassword} onChange={onRPassword} isValid={rpassValid()} isInvalid={rpassInvalid()} ref={setRPassRef} required />
-              <Form.Control.Feedback type="invalid">
-                {rPassError}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group className="mb-3 ms-auto me-auto" controlId="acceptForm">
-              <Form.Check name="accept" className="ms-3 me-1" label="Agree to terms and conditions" feedback="You must agree to the terms and conditions." feedbackType="invalid" onChange={onAcceptTerms} ref={setAcceptRef} required />{' '}
-            </Form.Group>
-            <Form.Group className="mb-3 ms-3 me-3">
-              <Button type="submit" variant="primary" className="mb-3 ps-4 pe-4" >Register</Button>
-            </Form.Group>
-          </Form>
-          </div>
-          {/* <div>{testDiv}</div> */}
-          <hr />
-          <a href="signup" className="m-3 btn btn-success">Already have an account? Login Here!</a>
         </Container>
       </div>
     </>
