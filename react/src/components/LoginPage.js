@@ -26,33 +26,34 @@ function App() {
     e.preventDefault();
     e.stopPropagation();
     // API
-    const form = e.target;
-    if (form.username.value.length === 0 ||
-        form.password.value.length === 0)
-      return setErrorMessage({value: 'Fill in username and password'});
-    let url = "";
-    if (process.env.NODE_ENV !== "production")
-      url = `http://127.0.0.1:3001/api/users/login`;
-    else
-      url = "/api/users/login";
-    axios.post(url, {
-      username: `${form.username.value}`,
-      pwd: `${form.password.value}`
-    }).then(res => {
-      if (res.data.success) {
-        // Session cookies creation
-        setCookies('sessionID', res.data.success.id, { expires: new Date((60000 * 60) + res.data.success.access_time) });
-        setCookies('sessionIGN', res.data.success.ign, { expires: new Date((60000 * 60) + res.data.success.access_time) });
-        window.location.href = "/";
-      } else if (res.data.error) {
-        if (res.data.error.message === "Invalid Password")
-          setErrorMessage({value: 'Wrong Password'});
-        else if (res.data.error.message === "No Record Found")
-          setErrorMessage({value: 'User does not exist'});
-      }
-    }).catch((err) => {
-      setErrorMessage({value: err.response.data.error});
-    });
+    if (userNameValue.value.length === 0 ||
+        passwordValue.value.length === 0) {
+      setErrorMessage({value: 'Fill in username and password'});
+    } else {
+      let url = "";
+      if (process.env.NODE_ENV !== "production")
+        url = `http://127.0.0.1:3001/api/users/login`;
+      else
+        url = "/api/users/login";
+      axios.post(url, {
+        username: userNameValue.value,
+        pwd: passwordValue.value
+      }).then(res => {
+        if (res.data.success) {
+          // Session cookies creation
+          setCookies('sessionID', res.data.success.id, { expires: new Date((60000 * 60) + res.data.success.access_time) });
+          setCookies('sessionIGN', res.data.success.ign, { expires: new Date((60000 * 60) + res.data.success.access_time) });
+          window.location.href = "/";
+        } else if (res.data.error) {
+          if (res.data.error.message === "Invalid Password")
+            setErrorMessage({value: 'Wrong Password'});
+          else if (res.data.error.message === "No Record Found")
+            setErrorMessage({value: 'User does not exist'});
+        }
+      }).catch((err) => {
+        setErrorMessage({value: err.response.data.error});
+      });
+    }
   }
 
   useEffect(() => {
