@@ -13,6 +13,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    set: (v) => v.lowerCase(),
     match: /^[A-Za-z][A-Za-z0-9_.]{3,14}$/
   },
   password_encrypted: {
