@@ -65,7 +65,7 @@ router.get('/search/:key', function(req, res, next) {
 });
 
 router.get('/check/exists/:key', function(req, res, next) {
-  if (req.query.v) {
+  if (req.params.key && req.query.v) {
     Users.findOne({[req.params.key]: req.query.v})
       .then(data => {
         if (data)
