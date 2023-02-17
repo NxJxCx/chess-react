@@ -1,5 +1,5 @@
-if (!process.env.NODE_PRODUCTION) {
-    require('dotenv').config({ path : 'config.env' });
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config({ path : "config.env"});
 }
 var express = require('express');
 var path = require('path');
@@ -23,7 +23,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("react/build"));
+  app.get("*", (_, res) => {
+    res.sendFile(path.resolve(__dirname, "react", "build", "index.html"));
+  });
+}
 
 module.exports = app;
