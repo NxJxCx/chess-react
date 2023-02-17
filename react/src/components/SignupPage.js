@@ -121,7 +121,7 @@ function App() {
             setUserError(invalids.userLength);
           isValid = false;
         } else {
-          if (!pattern_an.test(uname)) {
+          if (!pattern_an2.test(uname)) {
             if (userError !== invalids.userInvalid)
               setUserError(invalids.userInvalid);
             isValid = false;
@@ -131,7 +131,7 @@ function App() {
     }
     if (!isValid) {
       if (uname.length > 3 &&
-        pattern_an.test(uname))
+        pattern_an2.test(uname))
         isValid = true;
     }
     if (isValid) {
