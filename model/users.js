@@ -47,28 +47,32 @@ const UserSchema = new Schema({
         try {
           const result = await this.model('User').findOne(doc).select({_id: 1, ign: 2, username: 3, creation_date: 4});
           if (result)
-            resolve(result);
+            resolve({success: Object.assign(result._doc, {access_time: Date.now()})});
           else
-            reject({message: 'No Record Found'});
+            resolve({error: { message: 'No Record Found'}});
         } catch(err) {
-          reject({message: 'Error occured'});
+          reject({error : {message: 'Error occured'}});
         }
       });      
     },
     findAllWithoutPassword(doc) {
       return new Promise(async (resolve, reject) => {
-        if (typeof(doc) === "object") { // with search query
-          const result = await this.model('User').find(doc).select({_id: 1, ign: 2, username: 3, creation_date: 4});
-          if (result.length > 0)
-            resolve(result);
-          else
-            reject({message: 'No Records Found'});
-        } else { // all records
-          const result = await this.model('User').find().select({_id: 1, ign: 2, username: 3, creation_date: 4});
-          if (result.length > 0)
-            resolve(result);
-          else
-            reject({message: 'No Records Found'});
+        try {
+          if (typeof(doc) === "object") { // with search query
+            const result = await this.model('User').find(doc).select({_id: 1, ign: 2, username: 3, creation_date: 4});
+            if (result.length > 0)
+              resolve({success: result});
+            else
+              resolve({error: {message: 'No Records Found'}});
+          } else { // all records
+            const result = await this.model('User').find().select({_id: 1, ign: 2, username: 3, creation_date: 4});
+            if (result.length > 0)
+              resolve({success: result});
+            else
+              resolve({error: {message: 'No Records Found'}});
+          }
+        } catch(err) {
+          reject({error: {message: 'Error occured'}});
         }
       });
     }

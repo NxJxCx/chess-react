@@ -3,14 +3,14 @@ import { useCookies } from 'react-cookie';
 import Spinner from 'react-bootstrap/Spinner';
 
 function App() {
-  const {cookies, removeCookie} = useCookies(['sessionID', 'sessionIGN']);
+  const cookies = useCookies(['sessionID', 'sessionIGN']);
   useEffect(() => {
-    if (cookies.sessionID)
-      removeCookie('sessionID');
-    if (cookies.sessionIGN)
-      removeCookie('sessionIGN');
-    return () => { window.location.href = '/login' };
-  }, [cookies.sessionID, cookies.sessionIGN, removeCookie]);
+    if (cookies[0].sessionID)
+      cookies[2]('sessionID');
+    if (cookies[0].sessionIGN)
+      cookies[2]('sessionIGN');
+    return () => { window.location.href = '/login'; };
+  }, [cookies]);
   return (
     <div className="App-header d-flex">
       <div className="flex-column align-items-center justify-content-center">

@@ -8,11 +8,6 @@ import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-const invalids = {
-  usernameNotExists: "Username does not exist",
-  invalidPassword: "Invalid Password",
-}
-
 
 function App() {
   const [userNameValue, setUserNameValue] = useState({value: ""});
@@ -43,7 +38,10 @@ function App() {
           setCookies('sessionIGN', res.data.success.ign, { expires: new Date((60000 * 60) + res.data.success.access_time) });
           window.location.href = "/";
         } else if (res.data.error) {
-          console.log("LOGIN FAILED: ", res.data.error.message);
+          if (res.data.error.message === "Invalid Password")
+            setErrorMessage({value: 'Wrong Password'});
+          else if (res.data.error.message === "No Record Found")
+            setErrorMessage({value: 'User does not exist'});
         }
       }).catch((err) => {
         console.log(err);

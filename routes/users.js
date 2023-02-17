@@ -65,8 +65,8 @@ router.get('/search/:key', function(req, res, next) {
 });
 
 router.get('/check/exists/:key', function(req, res, next) {
-  if (req.body[req.params.key]) {
-    Users.findOne({[req.params.key]: req.body[req.params.key]})
+  if (req.query.v) {
+    Users.findOne({[req.params.key]: req.query.v})
       .then(data => {
         if (data)
           res.status(200).send({success: true});
@@ -86,7 +86,7 @@ router.post('/', function(req, res, next) {
     Users.create(req.body)
       .then(data => {
         if (data) {
-          res.status(201).send(data);
+          res.status(201).send({success: data});
         } else {
           res.status(202).send({error: { message: "Failed to create user" } });
         }

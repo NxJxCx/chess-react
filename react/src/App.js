@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import Spinner from 'react-bootstrap/Spinner';
-import { CookiesProvider, useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 const LoginPage = lazy(() => import('./components/LoginPage'));
 const SignupPage = lazy(() => import('./components/SignupPage'));
@@ -34,24 +34,19 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button> */}
           <Navbar.Collapse id="headerLinks">
-          {/* <div className="collapse navbar-collapse" id="navbarController"> */}
             <Nav className="ms-auto">
-            {/* <ul className="navbar-nav me-auto"> */}
             {cookies.sessionID && cookies.sessionIGN ? (
-              <>
+              <Nav.Item>
               <Nav.Link href="logout" active={window.location.pathname === "/logout"} >Logout</Nav.Link>
-              </>
+              </Nav.Item>
             ) : (<>
+              <Nav.Item>
               <Nav.Link href="login" active={window.location.pathname === "/login"} >Login</Nav.Link>
-              {/* <li className="nav-item">
-                <a className={"nav-link" + (window.location.pathname === "/login"? " active": "")} href="login">Login</a>
-              </li> */}
-              <Nav.Link href="signup" active={window.location.pathname === "/signup"} >Sign Up</Nav.Link>
-              {/* <li className="nav-item" >
-                <a className={"nav-link" + (window.location.pathname === "/signup"? " active": "")} href="signup">Sign Up</a>
-              </li> */}
-            </>)}
-            {/* </ul> */}
+              </Nav.Item>
+              <Nav.Item><Nav.Link href="signup" active={window.location.pathname === "/signup"} >Sign Up</Nav.Link>
+              </Nav.Item>
+              </>
+            )}
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -61,12 +56,12 @@ const Header = () => {
 }
 
 const HomePage = () => {
-  const [cookies] = useCookies(['sessionID', 'sessionIGN']);
+  const cookies = useCookies(['sessionID', 'sessionIGN']);
   return (
     <>
       { window.location.pathname === "/" ? (
         <div className="App-header">
-          <div className="h1">Welcome, {cookies.sessionIGN}!</div>
+          <div className="fw-bold h1 text-light">{cookies[0].sessionID && cookies[0].sessionIGN ? (<>Welcome, {cookies[0].sessionIGN}!</>) : (<><a href="/login" className="text-decoration-none text-warning">Login now!</a></>)}</div>
         </div>
       ) : undefined }
       <Outlet />
@@ -97,14 +92,12 @@ const Router = createBrowserRouter(createRoutesFromElements(
 
 function App() {
   return (
-    <CookiesProvider>
     <div className="App">
       <Header />
       <Suspense fallback={<LoadingScreen />} >
         <RouterProvider router={Router} />
       </Suspense>
     </div>
-    </CookiesProvider>
   );
 }
 
