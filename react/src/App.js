@@ -9,6 +9,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 const LoginPage = lazy(() => import('./components/LoginPage'));
 const SignupPage = lazy(() => import('./components/SignupPage'));
+const ErrorPage = lazy(() => import('./components/ErrorPage'));
 
 const Header = () => {
   return (
@@ -22,7 +23,7 @@ const Header = () => {
           </button> */}
           <Navbar.Collapse id="headerLinks">
           {/* <div className="collapse navbar-collapse" id="navbarController"> */}
-            <Nav className="me-auto">
+            <Nav className="ms-auto">
             {/* <ul className="navbar-nav me-auto"> */}
               <Nav.Link href="login" active={window.location.pathname === "/login"} >Login</Nav.Link>
               {/* <li className="nav-item">
@@ -38,16 +39,6 @@ const Header = () => {
         </Container>
       </Navbar>
     </header>
-  );
-}
-
-const ErrorPage = () => {
-  return (
-    <div className="App-header">
-      <h1 className="h1">
-        ERROR 404!
-      </h1>
-    </div>
   );
 }
 
