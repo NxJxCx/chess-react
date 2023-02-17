@@ -27,6 +27,9 @@ function App() {
     e.stopPropagation();
     // API
     const form = e.target;
+    if (form.username.value.length === 0 ||
+        form.password.value.length === 0)
+      return setErrorMessage({value: 'Fill in username and password'});
     let url = "";
     if (process.env.NODE_ENV !== "production")
       url = `http://127.0.0.1:3001/api/users/login`;
