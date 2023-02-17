@@ -18,7 +18,7 @@ const UserSchema = new Schema({
   password_encrypted: {
     type: String,
     required: true,
-    set: (v) => bcrypt.hashSync(v, Math.max(10, Math.floor(Math.random() * 16)))
+    set: (v) => bcrypt.hashSync(v, Math.max(5, Math.floor(Math.random() * 10)))
   },
   creation_date: {
     type: Date,
@@ -29,14 +29,14 @@ const UserSchema = new Schema({
     findOneWithPassword(doc, pwd) {
       return new Promise(async (resolve, reject) => {
         try {
-          const result = await this.model('User').findOne(doc).select({_id: 1, password_encrypted: 2});
+          const result = await this.model('User').findOne(doc).select({_id: 1, ign: 2, password_encrypted: 3});
           if (result) {
-            if (result.comparePassword(pwd, result.password_encrypted)) {
-              resolve({id: result._id});
+            if (result.comparePassword(pwd)) {
+              resolve({success: {id: result._id, ign: result.ign, access_time: Date.now()}});
             } else
-              reject({message: 'Invalid Password'});
+              resolve({error: { message: 'Invalid Password' } });
           } else
-            reject({message: 'No Record Found'});
+            resolve({error: { message: 'No Record Found' } });
         } catch(err) {
           reject({message: 'Error Occured'});
         }

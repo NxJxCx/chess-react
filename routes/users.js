@@ -7,15 +7,15 @@ const Users = require('../model/users');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   let userQuery = {};
-  if (req.body) {
-    if (req.body._id)
-      userQuery._id = req.body._id;
-    if (req.body.ign)
-      userQuery.ign = req.body.ign;
-    if (req.body.username)
-      userQuery.username = req.body.username;
-    if (req.body.created_date)
-      userQuery.created_date = req.body.created_date;
+  if (req.query) {
+    if (req.query._id)
+      userQuery._id = req.query._id;
+    if (req.query.ign)
+      userQuery.ign = req.query.ign;
+    if (req.query.username)
+      userQuery.username = req.query.username;
+    if (req.query.created_date)
+      userQuery.created_date = req.query.created_date;
   }
   Users.findAllWithoutPassword(userQuery)
     .then(data => {
@@ -64,20 +64,6 @@ router.get('/search/:key', function(req, res, next) {
   }
 });
 
-
-router.get('/login/:username', function(req, res, next) {
-  if (req.params.username) {
-    Users.findOneWithPassword({username: req.params.username}, req.body.pwd)
-      .then(data => {
-        res.status(200).send({success: true, access_time: Date.now()});
-      })
-      .catch(err => {
-        res.status(400).send({error: err.message});
-      });
-  } else
-    res.status(401).send({error: "Unauthorized"});
-});
-
 router.get('/check/exists/:key', function(req, res, next) {
   if (req.body[req.params.key]) {
     Users.findOne({[req.params.key]: req.body[req.params.key]})
@@ -100,17 +86,33 @@ router.post('/', function(req, res, next) {
     Users.create(req.body)
       .then(data => {
         if (data) {
-          res.status(200).send(data);
+          res.status(201).send(data);
         } else {
-          res.status(400).send({error: "Failed to create user"});
+          res.status(202).send({error: { message: "Failed to create user" } });
         }
       })
       .catch(err => {
-        res.status(401).send({error: err.message});
+        res.status(400).send({error: err.message});
       });
   } else 
-    res.status(401).send({error: "Unauthorized"});
+    res.status(403).send({error: "Forbidden"});
 });
 
+// Login
+router.post('/login', function(req, res, next) {
+  if (req.body.username && req.body.pwd) {
+    Users.findOneWithPassword({username: req.body.username}, req.body.pwd)
+      .then(data => {
+        if (data.success)
+          res.status(200).send(data);
+        else if (data.error)
+          res.status(202).send(data);
+      })
+      .catch(err => {
+        res.status(400).send({error: {  message: err.message }});
+      });
+  } else
+    res.status(403).send({error: { message: "Forbidden" } });
+});
 
 module.exports = router;
