@@ -82,21 +82,24 @@ function App() {
         isValid = true;
     }
     if (isValid) {
-      if (!process.env.NODE_PRODUCTION) {
-        try {
-          const isExist = await axios.get(`http://127.0.0.1:3001/api/users/check/exists/ign`, {
-            params: {
-              v: `${ign}`
-            }
-          });
-          if (isExist.data.success) {
-            isValid = false;
-            setIgnError(invalids.ignExists);
+      let url = "";
+      if (process.env.NODE_ENV !== 'production')
+        url = `http://127.0.0.1:3001/api/users/check/exists/ign`;
+      else
+        url = "/api/users/check/exists/ign";
+      try {
+        const isExist = await axios.get(url, {
+          params: {
+            v: `${ign}`
           }
-        } catch (err) {
-          console.log(err);
+        });
+        if (isExist.data.success) {
           isValid = false;
+          setIgnError(invalids.ignExists);
         }
+      } catch (err) {
+        console.log(err);
+        isValid = false;
       }
     }
     if (isValidIGN !== isValid)
@@ -132,21 +135,24 @@ function App() {
         isValid = true;
     }
     if (isValid) {
-      if (!process.env.NODE_PRODUCTION) {
-        try {
-          const isExist = await axios.get(`http://127.0.0.1:3001/api/users/check/exists/username`, {
-            params: {
-              v: `${uname}`
-            }
-          });
-          if (isExist.data.success) {
-            isValid = false;
-            setUserError(invalids.usernameExists);
+      let url = "";
+      if (process.env.NODE_ENV !== 'production')
+        url = `http://127.0.0.1:3001/api/users/check/exists/username`;
+      else
+        url = "/api/users/check/exists/username";
+      try {
+        const isExist = await axios.get(url, {
+          params: {
+            v: `${uname}`
           }
-        } catch (err) {
-          console.log(err);
+        });
+        if (isExist.data.success) {
           isValid = false;
+          setUserError(invalids.usernameExists);
         }
+      } catch (err) {
+        console.log(err);
+        isValid = false;
       }
     }
     if (isValidUser !== isValid)
@@ -252,23 +258,25 @@ function App() {
         passRef.checkValidity() &&
         rPassRef.checkValidity() &&
         acceptRef.checkValidity()) {
-      console.log("CREATING...");
-      if (!process.env.NODE_PRODUCTION) {
-        axios.post(`http://127.0.0.1:3001/api/users`, {
-          ign: formValue.ignname,
-          username: formValue.username,
-          password_encrypted: formValue.password
-        }).then(res => {
-          console.log("DONE!");
-          if (res.data.success)
-            console.log(res.data.success);
-          else if (res.data.error)
-            console.log(res.data.error);
-          window.location.href = '/login';
-        }).catch(err => {
-          console.log(err);
-        })
-      }
+      let url = "";
+      if (process.env.NODE_ENV !== 'production')
+        url = `http://127.0.0.1:3001/api/users`;
+      else
+        url = "/api/users";
+      axios.post(url, {
+        ign: formValue.ignname,
+        username: formValue.username,
+        password_encrypted: formValue.password
+      }).then(res => {
+        console.log("DONE!");
+        if (res.data.success)
+          console.log(res.data.success);
+        else if (res.data.error)
+          console.log(res.data.error);
+        window.location.href = '/login';
+      }).catch(err => {
+        console.log(err);
+      });
     }
   }
 

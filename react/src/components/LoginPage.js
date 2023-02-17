@@ -27,27 +27,29 @@ function App() {
     e.stopPropagation();
     // API
     const form = e.target;
-    if (!process.env.NODE_PRODUCTION) {
-      axios.post(`http://127.0.0.1:3001/api/users/login`, {
-        username: `${form.username.value}`,
-        pwd: `${form.password.value}`
-      }).then(res => {
-        if (res.data.success) {
-          // Session cookies creation
-          setCookies('sessionID', res.data.success.id, { expires: new Date((60000 * 60) + res.data.success.access_time) });
-          setCookies('sessionIGN', res.data.success.ign, { expires: new Date((60000 * 60) + res.data.success.access_time) });
-          window.location.href = "/";
-        } else if (res.data.error) {
-          if (res.data.error.message === "Invalid Password")
-            setErrorMessage({value: 'Wrong Password'});
-          else if (res.data.error.message === "No Record Found")
-            setErrorMessage({value: 'User does not exist'});
-        }
-      }).catch((err) => {
-        console.log(err);
-        console.log("ERROR LOGIN:", err.response.data.error);
-      })
-    }
+    let url = "";
+    if (process.env.NODE_ENV !== "production")
+      url = `http://127.0.0.1:3001/api/users/login`;
+    else
+      url = "/api/users/login";
+    axios.post(url, {
+      username: `${form.username.value}`,
+      pwd: `${form.password.value}`
+    }).then(res => {
+      if (res.data.success) {
+        // Session cookies creation
+        setCookies('sessionID', res.data.success.id, { expires: new Date((60000 * 60) + res.data.success.access_time) });
+        setCookies('sessionIGN', res.data.success.ign, { expires: new Date((60000 * 60) + res.data.success.access_time) });
+        window.location.href = "/";
+      } else if (res.data.error) {
+        if (res.data.error.message === "Invalid Password")
+          setErrorMessage({value: 'Wrong Password'});
+        else if (res.data.error.message === "No Record Found")
+          setErrorMessage({value: 'User does not exist'});
+      }
+    }).catch((err) => {
+      setErrorMessage({value: err.response.data.error});
+    });
   }
 
   useEffect(() => {

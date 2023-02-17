@@ -1,18 +1,18 @@
-if (process.env.NODE_ENV !== "production") {
-  require('dotenv').config({ path : "config.env"});
-}
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
-var connectDB = require('./database/database');
-
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config({ path : "myconfig.env"});
+}
+
+var connectDB = require('./database/database');
 
 connectDB();
 
