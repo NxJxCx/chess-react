@@ -54,8 +54,8 @@ router.get('/login/:username', function(req, res, next) {
 });
 
 router.get('/check/exists/:key', function(req, res, next) {
-  if (req.query.v) {
-    Users.findOne({[req.params.key]: req.query.v})
+  if (req.body[req.params.key]) {
+    Users.findOne({[req.params.key]: req.body[req.params.key]})
       .then(data => {
         if (data)
           res.status(200).send({success: true});
