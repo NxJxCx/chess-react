@@ -26,19 +26,44 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/_id/:id', function(req, res, next) {
-  if (req.params.id) {
-    Users.findOneWithoutPassword({_id: req.params.id})
-      .then(data => {
-        res.status(200).send(data);
-      })
-      .catch(err => {
-        res.status(400).send({error: err.message});
-      });
+router.get('/search/:key', function(req, res, next) {
+  if (req.params.key && req.query.v) {
+    switch (req.params.key) {
+      case 'ign':
+        Users.find({}).select({_id: 1, ign: 2, created_date: 3}).byIGN(req.query.v).exec()
+          .then(data => {
+            res.status(200).send(data);
+          })
+          .catch(err => {
+            res.status(400).send({error: err.message});
+          });
+        break;
+      case 'username':
+        Users.find({}).select({_id: 1, ign: 2, created_date: 4}).byUsername(req.query.v).exec()
+          .then(data => {
+            res.status(200).send(data);
+          })
+          .catch(err => {
+            res.status(400).send({error: err.message});
+          });
+        break;
+      case '_id':
+        Users.find({}).select({_id: 1, ign: 2, created_date: 3}).byID(req.query.v).exec()
+          .then(data => {
+            res.status(200).send(data);
+          })
+          .catch(err => {
+            res.status(400).send({error: err.message});
+          });
+        break;
+      default:
+        res.status(400).send({error: 'Invalid Search'});
+    } 
   } else {
     res.status(500).send({error: 'Unauthorized Access'});
   }
 });
+
 
 router.get('/login/:username', function(req, res, next) {
   if (req.params.username) {

@@ -78,6 +78,17 @@ const UserSchema = new Schema({
       const result = bcrypt.compareSync(pwd, this.password_encrypted);
       return result;
     }
+  },
+  query: {
+    byIGN(ign) {
+      return this.where('ign', new RegExp(ign, 'i'));
+    },
+    byUsername(username) {
+      return this.where('username', new RegExp(username, 'i'));
+    },
+    byID(id) {
+      return this.where('_id', new RegExp(id, 'i'));
+    }
   }
 });
 
