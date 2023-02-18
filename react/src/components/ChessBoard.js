@@ -10,6 +10,7 @@ function Piece(props) {
   const [position] = useState(props.position instanceof Array && props.position.length === 2 && typeof(props.position[0]) === "number" && typeof(props.position[0]) === "number" ? props.position.map(it => Math.floor(it)) : [1,1]);
   const [square, squareRef] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     setIsLoaded(true);
     const sqSize = props.board.offsetWidth / 8;
@@ -24,8 +25,8 @@ function Piece(props) {
         square.style.bottom = ((position[1] - 1) * sqSize) + "px";
       }
     };
-    
   }, [props.board, square]);
+
   return (
     <>
     {isLoaded ? (
@@ -124,16 +125,40 @@ function App() {
   const Content = function(props) {
     return (
     <>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <PawnBlack board={props.board} position={[2,2]}/>
-      <KingBlack board={props.board} position={[5,1]}/>
-      <KingBlack board={props.board} position={[5,1]}/>
+      {/* White */}
+      <PawnWhite board={props.board} position={[1,2]}/>
+      <PawnWhite board={props.board} position={[2,2]}/>
+      <PawnWhite board={props.board} position={[3,2]}/>
+      <PawnWhite board={props.board} position={[4,2]}/>
+      <PawnWhite board={props.board} position={[5,2]}/>
+      <PawnWhite board={props.board} position={[6,2]}/>
+      <PawnWhite board={props.board} position={[7,2]}/>
+      <PawnWhite board={props.board} position={[8,2]}/>
+      <RookWhite board={props.board} position={[1,1]}/>
+      <KnightWhite board={props.board} position={[2,1]}/>
+      <BishopWhite board={props.board} position={[3,1]}/>
+      <RookWhite board={props.board} position={[8,1]}/>
+      <KnightWhite board={props.board} position={[7,1]}/>
+      <BishopWhite board={props.board} position={[6,1]}/>
+      <QueenWhite board={props.board} position={[4,1]}/>
+      <KingWhite board={props.board} position={[5,1]}/>
+      {/* Black */}
+      <PawnBlack board={props.board} position={[1,7]}/>
+      <PawnBlack board={props.board} position={[2,7]}/>
+      <PawnBlack board={props.board} position={[3,7]}/>
+      <PawnBlack board={props.board} position={[4,7]}/>
+      <PawnBlack board={props.board} position={[5,7]}/>
+      <PawnBlack board={props.board} position={[6,7]}/>
+      <PawnBlack board={props.board} position={[7,7]}/>
+      <PawnBlack board={props.board} position={[8,7]}/>
+      <RookBlack board={props.board} position={[1,8]}/>
+      <KnightBlack board={props.board} position={[2,8]}/>
+      <BishopBlack board={props.board} position={[3,8]}/>
+      <RookBlack board={props.board} position={[8,8]}/>
+      <KnightBlack board={props.board} position={[7,8]}/>
+      <BishopBlack board={props.board} position={[6,8]}/>
+      <QueenBlack board={props.board} position={[4,8]}/>
+      <KingBlack board={props.board} position={[5,8]}/>
     </>
     );
   }
@@ -141,7 +166,9 @@ function App() {
   return (
     <div className="d-flex justify-content-center">
       <div className="chessboard" ref={chessboardRef}>
-      {chessBoard ? <Content board={chessBoard} /> : <Spinner />}
+      {chessBoard ?
+       <Content board={chessBoard} /> :
+       <Spinner />}
       </div>
     </div>
   );
