@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     if (chessboard)  {
       window.onresize = function() {
-        chessboard.style.height = chessboard.current.offsetWidth;
+        chessboard.style.height = chessboard.offsetWidth;
       }
     }
   }, [chessboard]);
