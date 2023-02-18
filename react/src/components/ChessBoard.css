@@ -1,13 +1,10 @@
 .chessboard {
   width: 100vw;
   height: 100vw;
-  min-width: 350px;
-  max-width: 520px;
-  min-height: 350px;
-  max-height: 520px;
-  box-sizing: border-box;
-  border: 1px solid red;
-  margin-top: 5vh;
+  max-width: 450px;
+  max-height: 450px;
+  margin-top: 10vh;
+  margin-bottom: auto;
   position: relative;
 }
 
@@ -60,14 +57,14 @@
 
 
 
-@media screen and (width >= 520px) {
+@media screen and (width >= 450px) {
   .chess-square-black, .chess-square-white{
     width: 65px;
     height: 65px;
   }
 }
 
-@media screen and (width < 520px) {
+@media screen and (width < 450px) {
   .chess-square-black, .chess-square-white{
     width: 12.5vw;
     height: 12.5vw;
