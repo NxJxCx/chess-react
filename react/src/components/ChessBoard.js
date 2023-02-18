@@ -1,6 +1,6 @@
 
 import './ChessBoard.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 
 import Board from './chess/Board';
