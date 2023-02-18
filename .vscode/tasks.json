@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "run dev",
+			"script": "dev",
 			"problemMatcher": [],
 			"label": "npm: start",
 			"detail": "nodemon ./bin/www"

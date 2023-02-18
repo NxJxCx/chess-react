@@ -1,22 +1,51 @@
-.draggable.white {
-    color: #fff;
+.chessboard {
+  width: 100%;
+  min-width: 400px;
+  max-width: 520px;
+  min-height: 400px;
+  max-height: 520px;
+  box-sizing: border-box;
+  border: 1px solid red;
+  position: relative;
 }
-.row {
-	min-height:90px;
+
+.clickable {
+  cursor: pointer;
 }
-.col-1 {
-	border-bottom:1px solid black;
-	border-right:1px solid black;
+.clickable.white {
+  color: #fff;
 }
-.left {
-	border-left:1px solid black;
+.clickable.black {
+  color: #000;
 }
-.top {
-	border-top:1px solid black;
+
+.chess-square-white {
+  position: absolute;
+  background-color: #fff78d;
+  border: 1px solid black;
 }
-.card-body {
-	font-size:72px;
+
+.chess-square-black {
+  position: absolute;
+  background-color: #0a8de4;
+  border: 1px solid black;
 }
-.gray {
-	color:white
+
+@media screen and (width >= 520px) {
+  .chess-square-black, .chess-square-white{
+    width: 65px;
+    height: 65px;
+  }
 }
+
+@media screen and (width < 520px) {
+  .chess-square-black, .chess-square-white{
+    width: 12.5vw;
+    height: 12.5vw;
+  }
+}
+
+
+
+
+

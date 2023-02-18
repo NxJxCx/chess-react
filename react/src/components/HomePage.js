@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { useCookies } from 'react-cookies';
+import { useCookies } from 'react-cookie';
 import ChessBoard from './ChessBoard';
 
 const LoggedIn = function(props) {
   const cookies = props.cookies;
   return (
     <>
-      <div className="h1 bg-dark">
+      <div className="h1 bg-dark text-light pb-3">
         Welcome, {cookies.sessionIGN}!
       </div>
       <ChessBoard />
@@ -14,7 +14,7 @@ const LoggedIn = function(props) {
   );
 }
 
-const NotLoggedIn = function({ cookies }) {
+const NotLoggedIn = function(props) {
   return (
     <div className="App-header">
       <div className="fw-bold h1 text-light">
