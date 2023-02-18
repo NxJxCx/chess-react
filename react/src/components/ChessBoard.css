@@ -1,0 +1,22 @@
+.draggable.white {
+    color: #fff;
+}
+.row {
+	min-height:90px;
+}
+.col-1 {
+	border-bottom:1px solid black;
+	border-right:1px solid black;
+}
+.left {
+	border-left:1px solid black;
+}
+.top {
+	border-top:1px solid black;
+}
+.card-body {
+	font-size:72px;
+}
+.gray {
+	color:white
+}

@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import { RouterProvider, Route, Outlet, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -8,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Spinner from 'react-bootstrap/Spinner';
 import { useCookies } from 'react-cookie';
 
+const HomePage = lazy(() => import('./components/HomePage'));
 const LoginPage = lazy(() => import('./components/LoginPage'));
 const SignupPage = lazy(() => import('./components/SignupPage'));
 const ErrorPage = lazy(() => import('./components/ErrorPage'));
@@ -52,20 +53,6 @@ const Header = () => {
         </Container>
       </Navbar>
     </header>
-  );
-}
-
-const HomePage = () => {
-  const cookies = useCookies(['sessionID', 'sessionIGN']);
-  return (
-    <>
-      { window.location.pathname === "/" ? (
-        <div className="App-header">
-          <div className="fw-bold h1 text-light">{cookies[0].sessionID && cookies[0].sessionIGN ? (<>Welcome, {cookies[0].sessionIGN}!</>) : (<><a href="/login" className="text-decoration-none text-warning">Login now!</a></>)}</div>
-        </div>
-      ) : undefined }
-      <Outlet />
-    </>
   );
 }
 
