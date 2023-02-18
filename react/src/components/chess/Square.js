@@ -1,4 +1,4 @@
-import Piece from './pieces/Piece';
+import Piece from './Piece';
 
 function App(props) {
     return (  
