@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import ChessBoard from './ChessBoard';
+import React, { lazy } from 'react';
+
+const ChessBoard = lazy(() => import('./ChessBoard'));
 
 const LoggedIn = function(props) {
   const cookies = props.cookies;
