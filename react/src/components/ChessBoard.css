@@ -1,11 +1,13 @@
 .chessboard {
-  width: 100%;
-  min-width: 360px;
+  width: 100vw;
+  height: 100vw;
+  min-width: 350px;
   max-width: 520px;
-  min-height: 360px;
+  min-height: 350px;
   max-height: 520px;
   box-sizing: border-box;
   border: 1px solid red;
+  margin-top: 5vh;
   position: relative;
 }
 
@@ -29,8 +31,6 @@
   position: absolute;
   background-color: #0a8de4;
   border: 1px solid black;
-  padding: 0, 0, 0, 0;
-  margin: 0, 0, 0, 0;
 }
 
 @media screen and (width >= 520px) {

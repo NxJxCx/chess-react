@@ -10,29 +10,31 @@ function Piece(props) {
   const [position] = useState(props.position instanceof Array && props.position.length === 2 && typeof(props.position[0]) === "number" && typeof(props.position[0]) === "number" ? props.position.map(it => Math.floor(it)) : [1,1]);
   const [square, squareRef] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [sqSize, setSqSize] = useState(props.board.offsetWidth / 8);
 
   useEffect(() => {
     setIsLoaded(true);
-    const sqSize = props.board.offsetWidth / 8;
+    if (props.board.offsetWidth !== sqSize)
+      setSqSize(props.board.offsetWidth / 8);
     if (square) {
       square.style.left = ((position[0] - 1) * sqSize) + "px";
       square.style.bottom = ((position[1] - 1) * sqSize) + "px";
     }
-    window.onresize = function() {
+    window.addEventListener('resize', function(e) {
       const sqSize = props.board.offsetWidth / 8;
       if (square) {
         square.style.left = ((position[0] - 1) * sqSize) + "px";
         square.style.bottom = ((position[1] - 1) * sqSize) + "px";
       }
-    };
-  }, [props.board, square]);
+    });
+  }, [props.board.offsetWidth, square, position, sqSize]);
 
   return (
     <>
     {isLoaded ? (
       <div className={[...position].reduce((ps, a) => ps + a, 0) % 2 === 0 ? "chess-square-black" : "chess-square-black"} ref={squareRef} >
         <div className={`clickable ${color}`}>
-          <i className={`fas fa-chess-${piece}`}></i>
+          <i className={`fas fa-chess-${piece} mt-3`} style={{width: sqSize * 0.5, height: sqSize * 0.5}} ></i>
         </div>
       </div>
     ) : <Spinner />}
