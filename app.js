@@ -23,6 +23,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.enable('trust proxy');
+app.use(function(request, response, next) {
+  if (process.env.NODE_ENV === 'production' && !request.secure) {
+    return response.redirect("https://" + request.headers.host + request.url);
+  }
+  next();
+});
+
 app.use('/api/users', usersRouter);
 
 if (process.env.NODE_ENV === "production") {
@@ -31,5 +39,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "react", "build", "index.html"));
   });
 }
+
+
 
 module.exports = app;
