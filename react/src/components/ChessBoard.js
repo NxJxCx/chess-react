@@ -15,7 +15,7 @@ function App() {
     enemyID: null,
     get selectedPiece() {
       return this.isMyTurn ? this.gameData[this.myID].selectedPiece : null;
-    }
+    },
     get highlighted() {
       return this.selectedPiece ? this.gameData[this.myID].possibleMoves : [];
     },
