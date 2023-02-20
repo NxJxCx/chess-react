@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
+import { LinkContainer } from 'react-router-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import { useCookies } from 'react-cookie';
 
@@ -38,13 +39,13 @@ const Header = () => {
             <Nav className="ms-auto">
             {cookies.sessionID && cookies.sessionIGN ? (
               <Nav.Item>
-              <Nav.Link href="logout" active={window.location.pathname === "/logout"} >Logout</Nav.Link>
+              <LinkContainer href="logout" active={window.location.pathname === "/logout"} >Logout</LinkContainer>
               </Nav.Item>
             ) : (<>
               <Nav.Item>
-              <Nav.Link href="login" active={window.location.pathname === "/login"} >Login</Nav.Link>
+              <LinkContainer href="login" active={window.location.pathname === "/login"} >Login</LinkContainer>
               </Nav.Item>
-              <Nav.Item><Nav.Link href="signup" active={window.location.pathname === "/signup"} >Sign Up</Nav.Link>
+              <Nav.Item><LinkContainer href="signup" active={window.location.pathname === "/signup"} >Sign Up</LinkContainer>
               </Nav.Item>
               </>
             )}
