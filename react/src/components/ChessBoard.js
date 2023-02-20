@@ -13,60 +13,11 @@ function App() {
     turnTime: 0,
     myID: null,
     enemyID: null,
-    selectedPiece: null,
+    get selectedPiece() {
+      return this.isMyTurn ? this.gameData[this.myID].selectedPiece : null;
+    }
     get highlighted() {
-      // do some selected with highloghts 8*8 array of true / false
-      return (!(this.gameData.isPlaying && this.gameData.turn === this.myID && this.selectedPiece) ?
-        [] /* empty array because its not our turn */ :
-        // else do some calculations on highlighting squares on selected piece
-        Array.from({length: 8}).fill([])
-        .map((_, i) =>
-          Array.from({length: 8}).fill(false)
-          .map((ity, j) => {
-            const piece = this.selectedPiece.piece;
-            const x = this.selectedPiece.x;
-            const y = this.selectedPiece.y;
-            switch (piece) {
-              case "pawn": {
-                /* selected pawn */
-                if (x === i+1 && y === j+1)
-                  return true;
-                /* next move pawn */
-                if (!this.gameData.board[i][j] && x === i+1 && y === j)
-                  return true;
-                /* next move 2 pawn */
-                if (!this.gameData.board[i][j] && !this.gameData.board[i][j-1] && x === i+1 && y === j-1)
-                  return true;
-                /* eat pawn */
-                if (!this.gameData.board[i][j] && (x === i || x === i+2) && y === j)
-                  return true;
-                break;
-              }
-              case "rook": {
-                /* selected rook */
-                if (x === i+1 && y === j+1)
-                  return true;
-                break;
-              }
-              case "knight": {
-                break;
-              }
-              case "bishop": {
-                break;
-              }
-              case "queen": {
-                break;
-              }
-              case "king": {
-                break;
-              }
-              default:
-                // nothing
-            }
-            return ity;
-          })
-        )
-      );
+      return this.selectedPiece ? this.gameData[this.myID].possibleMoves : [];
     },
     get isMyTurn() {
       return (this.myID && this.gameData[this.myID] &&
