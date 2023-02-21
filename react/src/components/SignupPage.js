@@ -269,11 +269,13 @@ function App() {
         password_encrypted: formValue.password
       }).then(res => {
         console.log("DONE!");
-        if (res.data.success)
+        if (res.data.success) {
           console.log(res.data.success);
-        else if (res.data.error)
+          window.location.href = '/login';
+        } else if (res.data.error) {
           console.log(res.data.error);
-        window.location.href = '/login';
+          acceptRef.click();
+        }
       }).catch(err => {
         console.log(err);
       });

@@ -1,7 +1,5 @@
-import { Outlet } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import React, { lazy } from 'react';
-
 const ChessBoard = lazy(() => import('./ChessBoard'));
 
 const LoggedIn = function(props) {
@@ -35,7 +33,6 @@ function App() {
         <LoggedIn cookies={cookies[0]} setCookie={cookies[1]} removeCookie={cookies[2]} /> :
         <NotLoggedIn cookies={cookies} setCookie={cookies[1]} removeCookie={cookies[2]} />
       ) : (<></>) }
-      <Outlet />
     </>
   );
 }
