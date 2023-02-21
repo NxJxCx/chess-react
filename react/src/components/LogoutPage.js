@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import Spinner from 'react-bootstrap/Spinner';
-
+import Button from 'react-bootstrap/Button';
+import { LinkContainer } from 'react-router-bootstrap';
 function App() {
   const cookies = useCookies(['sessionID', 'sessionIGN']);
   useEffect(() => {
@@ -9,13 +10,14 @@ function App() {
       cookies[2]('sessionID');
     if (cookies[0].sessionIGN)
       cookies[2]('sessionIGN');
-    return () => { window.location.href = '/login'; };
+    return () => setTimeout(() => { document.getElementById("redirection").click(); }, 500);
   }, [cookies]);
   return (
     <div className="App-header d-flex">
       <div className="flex-column align-items-center justify-content-center">
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
+          <LinkContainer to="/login"><Button className="visually-hidden" id="redirection" /></LinkContainer>
         </Spinner>
       </div>
     </div>

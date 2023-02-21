@@ -1,6 +1,6 @@
 import { useCookies } from 'react-cookie';
-import React, { lazy } from 'react';
-const ChessBoard = lazy(() => import('./ChessBoard'));
+
+import ChessBoard from './ChessBoard';
 
 const LoggedIn = function(props) {
   const cookies = props.cookies;
