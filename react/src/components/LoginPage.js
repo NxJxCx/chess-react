@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import { LinkContainer } from 'react-router-bootstrap';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Card from 'react-bootstrap/Card';
@@ -12,7 +13,7 @@ import { useCookies } from 'react-cookie';
 function App() {
   const [userNameValue, setUserNameValue] = useState({value: ""});
   const [passwordValue, setPasswordValue] = useState({value: ""});
-  const [errorMessage, setErrorMessage] = useState({ value: undefined }); 
+  const [errorMessage, setErrorMessage] = useState({ value: undefined });
   const [errMsg, setErrMsg] = useState(null);
   const [cookies, setCookies] = useCookies(['sessionID', 'sessionIGN']);
 
@@ -57,16 +58,17 @@ function App() {
   }
 
   useEffect(() => {
-    if (cookies.sessionID && cookies.sessionIGN) {
-      // redirect home
-      return () => window.location.href = '/';
-    }
     if (errMsg && errorMessage.value) {
       if (!errMsg.classList.contains("show"))
         errMsg.classList.add("show");
     }
+    return () => setTimeout(() => {
+      if (cookies.sessionID && cookies.sessionIGN)
+        document.getElementById("redirection").click();
+    }, 100);
   }, [cookies, errMsg, errorMessage]);
-
+  if (cookies.sessionID && cookies.sessionIGN)
+    return (<div className="App-header"><LinkContainer to="/"><Button className="visually-hidden" id="redirection" /></LinkContainer></div>);
   return (
   <div className="App-header">
     <Container>
