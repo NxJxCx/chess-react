@@ -1,10 +1,12 @@
 /* Signup Page */
 import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+import { useCookies, withCookies } from 'react-cookie';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 
 const invalids = {
@@ -38,7 +40,8 @@ const pattern_an = /^[A-Za-z][A-Za-z0-9_.]{3,14}$/;
 const pattern_an2 = /^[A-Za-z][A-Za-z0-9_.*]{3,14}$/;
 const strong_pass = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
 
-function App() {
+function App(props) {
+  const navigate = useNavigate();
   const [formValue, setFormValue] = useState({ ignname: "", username: "", password: "", rpassword: "", accept: false });
   const [passRef, setPassRef] = useState(null);
   const [rPassRef, setRPassRef] = useState(null);
@@ -283,10 +286,13 @@ function App() {
   }
 
   useEffect(() => {
-    if (cookies.sessionID && cookies.sessionIGN) {
-      return () => { window.location.href = '/' };
-    }
-  }, [cookies.sessionID, cookies.sessionIGN])
+    if ((props.cookies.sessionID && props.cookies.sessionIGN) || (cookies.sessionID && cookies.sessionIGN))
+      navigate("/");
+  }, [cookies, props, navigate]);
+
+  if ((props.cookies.sessionID && props.cookies.sessionIGN) || (cookies.sessionID && cookies.sessionIGN))
+    return (<div className="App-header"><Container><Spinner /></Container></div>);
+
   return (
     <>
       <div className="App-header">
@@ -336,4 +342,4 @@ function App() {
   );
 }
 
-export default App;
+export default withCookies(App);

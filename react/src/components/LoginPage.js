@@ -1,16 +1,18 @@
 /* Login Page */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCookies, withCookies } from 'react-cookie';
 import Container from 'react-bootstrap/Container';
+import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
-import { LinkContainer } from 'react-router-bootstrap';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 
 
-function App() {
+function App(props) {
+  const navigate = useNavigate();
   const [userNameValue, setUserNameValue] = useState({value: ""});
   const [passwordValue, setPasswordValue] = useState({value: ""});
   const [errorMessage, setErrorMessage] = useState({ value: undefined });
@@ -62,13 +64,13 @@ function App() {
       if (!errMsg.classList.contains("show"))
         errMsg.classList.add("show");
     }
-    return () => setTimeout(() => {
-      if (cookies.sessionID && cookies.sessionIGN)
-        document.getElementById("redirection").click();
-    }, 100);
-  }, [cookies, errMsg, errorMessage]);
-  if (cookies.sessionID && cookies.sessionIGN)
-    return (<div className="App-header"><LinkContainer to="/"><Button className="visually-hidden" id="redirection" /></LinkContainer></div>);
+    if ((props.cookies.sessionID && props.cookies.sessionIGN) ||
+        (cookies.sessionID && cookies.sessionIGN))
+      navigate("/");
+  }, [props, navigate, cookies, errMsg, errorMessage]);
+  if ((props.cookies.sessionID && props.cookies.sessionIGN) ||
+      (cookies.sessionID && cookies.sessionIGN))
+    return (<div className="App-header"><Container><Spinner /></Container></div>);
   return (
   <div className="App-header">
     <Container>
@@ -103,4 +105,4 @@ function App() {
   );
 }
 
-export default App;
+export default withCookies(App);
