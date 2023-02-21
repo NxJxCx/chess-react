@@ -25,18 +25,20 @@ function App() {
             <Navbar.Brand className="mb-0 h1">Chess NJC</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="headerLinks" />
-          {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarController" aria-controls="navbarController" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button> */}
           <Navbar.Collapse id="headerLinks">
             <Nav className="ms-auto">
-            {cookies.sessionID && cookies.sessionIGN ? (
+            {cookies.sessionID && cookies.sessionIGN ? (<>
+              <Nav.Item>
+              <LinkContainer to="/chatroom">
+                <Nav.Link>Chat Rooms</Nav.Link>
+              </LinkContainer>
+              </Nav.Item>
               <Nav.Item>
               <LinkContainer to="/logout">
               <Nav.Link>Logout</Nav.Link>
               </LinkContainer>
               </Nav.Item>
-            ) : (<>
+            </>) : (<>
               <Nav.Item>
               <LinkContainer to="/login">
               <Nav.Link>Login</Nav.Link>

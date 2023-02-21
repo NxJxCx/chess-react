@@ -8,10 +8,6 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-if (process.env.NODE_ENV !== "production") {
-  require('dotenv').config({ path : "myconfig.env"});
-}
-
 var connectDB = require('./database/database');
 
 connectDB();
@@ -21,7 +17,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 if (process.env.NODE_ENV === 'production') {
   app.enable('trust proxy');
@@ -36,13 +32,11 @@ app.use(function(request, response, next) {
 
 app.use('/api/users', usersRouter);
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
   app.use(express.static("react/build"));
   app.get("*", (_, res) => {
     res.sendFile(path.resolve(__dirname, "react", "build", "index.html"));
   });
 }
-
-
 
 module.exports = app;

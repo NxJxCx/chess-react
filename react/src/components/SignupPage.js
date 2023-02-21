@@ -86,7 +86,7 @@ function App(props) {
     }
     if (isValid) {
       let url = "";
-      if (process.env.NODE_ENV !== 'production')
+      if (process.env.NODE_ENV === 'development')
         url = `http://127.0.0.1:3001/api/users/check/exists/ign`;
       else
         url = "/api/users/check/exists/ign";
@@ -139,7 +139,7 @@ function App(props) {
     }
     if (isValid) {
       let url = "";
-      if (process.env.NODE_ENV !== 'production')
+      if (process.env.NODE_ENV === 'development')
         url = `http://127.0.0.1:3001/api/users/check/exists/username`;
       else
         url = "/api/users/check/exists/username";
@@ -262,7 +262,7 @@ function App(props) {
         rPassRef.checkValidity() &&
         acceptRef.checkValidity()) {
       let url = "";
-      if (process.env.NODE_ENV !== 'production')
+      if (process.env.NODE_ENV === 'development')
         url = `http://127.0.0.1:3001/api/users`;
       else
         url = "/api/users";

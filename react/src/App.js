@@ -10,6 +10,7 @@ const LoginPage = lazy(() => import('./components/LoginPage'));
 const SignupPage = lazy(() => import('./components/SignupPage'));
 const ErrorPage = lazy(() => import('./components/ErrorPage'));
 const LogoutPage = lazy(() => import('./components/LogoutPage'));
+const ChatRooms = lazy(() => import('./components/ChatRooms'));
 
 const LoadingScreen = () => (
   <div className="App-header d-flex">
@@ -33,6 +34,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/logout" element={<LogoutPage />} />
+            <Route path="/chatroom" element={<ChatRooms />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
        </Suspense>

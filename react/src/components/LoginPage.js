@@ -34,7 +34,7 @@ function App(props) {
       setErrorMessage({value: 'Fill in username and password'});
     } else {
       let url = "";
-      if (process.env.NODE_ENV !== "production")
+      if (process.env.NODE_ENV === "development")
         url = `http://127.0.0.1:3001/api/users/login`;
       else
         url = "/api/users/login";

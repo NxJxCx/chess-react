@@ -4,6 +4,11 @@
  * Module dependencies.
  */
 
+if (process.env.NODE_ENV === 'development')
+  require('dotenv').config({path:'myconfig.env'});
+else if (process.env.NODE_ENV === 'test')
+  require('dotenv').config({path:'test.env'});
+
 var app = require('../app');
 var debug = require('debug')('chess:server');
 var http = require('http');
